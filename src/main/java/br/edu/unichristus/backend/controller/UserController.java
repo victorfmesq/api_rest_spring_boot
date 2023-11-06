@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.unichristus.backend.data.dto.UserDTO;
+import br.edu.unichristus.backend.data.dto.UserLowDTO;
 import br.edu.unichristus.backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -42,7 +43,7 @@ public class UserController {
       @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
       @ApiResponse(responseCode = "500", description = "Erro interno no servidor") })
   @GetMapping("/{id}")
-  public UserDTO findById(@PathVariable("id") Long id) {
+  public UserLowDTO findById(@PathVariable("id") Long id) {
     return service.findById(id);
   }
 

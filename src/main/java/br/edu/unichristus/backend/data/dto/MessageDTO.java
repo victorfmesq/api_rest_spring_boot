@@ -10,17 +10,18 @@ import lombok.NoArgsConstructor;
 
 // serializable
 
-/* metodo para trasnferir objetos entre computadors. Basicamente ele ao inves de passar a referencia de memória.
+/* metodo para trasnferir objetos entre computadors. Basicamente ele ao inves de passar a referencia de memória
   trasnforma o objeto em binario.
 
-  sempre que retoranr algo da api p fora deve ser um serializable
+  sempre que retornar algo da api p fora deve ser um serializable
 */
 
 @Data
 @AllArgsConstructor // criar todos os contrutores padrão
 @NoArgsConstructor // criar construtor vazio
-@JsonPropertyOrder({"message", "key"}) // define a ordem dos atributos que o JSON retorna. Default = ordem que for escrito 
-public class MessageDTO implements Serializable{
+@JsonPropertyOrder({ "message", "key" }) // define a ordem dos atributos que o JSON retorna. Default = ordem que for
+                                         // escrito
+public class MessageDTO implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private String message;

@@ -55,7 +55,7 @@ public class UserService {
     repository.deleteById(id);
   }
 
-  public UserDTO findById(Long id) {
+  public UserLowDTO findById(Long id) {
     var user = repository.findById(id);
 
     if (user == null || user.isEmpty()) {
@@ -64,7 +64,7 @@ public class UserService {
           "Usuário não encontrado.");
     }
 
-    var returnUser = DozerConverter.parseObject(user.get(), UserDTO.class);
+    var returnUser = DozerConverter.parseObject(user.get(), UserLowDTO.class);
 
     return returnUser;
   }
