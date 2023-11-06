@@ -15,7 +15,7 @@ import br.edu.unichristus.backend.service.ProductService;
 import jakarta.websocket.server.PathParam;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/v1/product")
 public class ProductController {
 
   @Autowired
