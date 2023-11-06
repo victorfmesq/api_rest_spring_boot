@@ -20,6 +20,12 @@ public class CustomerService {
   private CustomerRepository repository;
 
   public CustomerDTO save(CustomerDTO dto) {
+    var customerId = dto.getId();
+
+    if (customerId != null) {
+      this.findById(customerId);
+    }
+
     if (dto.getName().length() > 100) {
       throw new CommonsException(HttpStatus.BAD_REQUEST,
           "unichristus.backend.service.customer.badrequest.exception",
@@ -32,14 +38,12 @@ public class CustomerService {
           "O cpf do cliente excede o limite de 11 caracteres.");
     }
 
-    if (!repository.findByCpf(dto.getCpf()).isEmpty()) {
+    var customerByCpf = repository.findByCpf(dto.getCpf());
+
+    if (!customerByCpf.isEmpty() && customerByCpf.get().getId() != customerId) {
       throw new CommonsException(HttpStatus.CONFLICT,
           "unichristus.backend.service.customer.conflict.exception",
           "O cpf informado ja foi cadastrado.");
-    }
-
-    if (dto.getId() != null) {
-      this.findById(dto.getId());
     }
 
     var customer = DozerConverter.parseObject(dto, Customer.class);

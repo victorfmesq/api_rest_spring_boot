@@ -22,10 +22,10 @@ public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
-  private float Value;
+  private float value;
 
-  @Column(length = 100)
-  private String Name;
+  @Column(length = 100, name = "Name")
+  private String name;
 
   @ManyToOne
   @JoinColumn(name = "sale_id")

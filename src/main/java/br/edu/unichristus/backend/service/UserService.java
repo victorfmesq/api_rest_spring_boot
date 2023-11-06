@@ -19,26 +19,32 @@ public class UserService {
   private UserRepository repository;
 
   public UserDTO save(UserDTO dto) {
+    var userId = dto.getId();
+
+    if (userId != null) { // id
+      this.findById(userId);
+    }
+
     if (dto.getName().length() > 100) { // userName
       throw new CommonsException(HttpStatus.BAD_REQUEST, // 400
           "unichristus.backend.service.user.badrequest.exception",
           "O nome do usuário excede o limite de 100 caracteres.");
     }
 
-    if (!repository.findByEmail(dto.getEmail()).isEmpty()) { // email
+    var userByEmail = repository.findByEmail(dto.getEmail());
+
+    if (!userByEmail.isEmpty() && userByEmail.get().getId() != userId) { // email
       throw new CommonsException(HttpStatus.CONFLICT, // 409
           "unichristus.backend.service.user.conflict.exception",
           "O email informado ja foi cadastrado.");
     }
 
-    if (!repository.findByLogin(dto.getLogin()).isEmpty()) { // login
+    var userByLogin = repository.findByLogin(dto.getLogin());
+
+    if (!userByLogin.isEmpty() && userByLogin.get().getId() != userId) { // login
       throw new CommonsException(HttpStatus.CONFLICT, // 409
           "unichristus.backend.service.user.conflict.exception",
           "O login informado não existe.");
-    }
-
-    if (dto.getId() != null) { // id
-      this.findById(dto.getId());
     }
 
     // conversão do dto para o objeto recebido pelo banco

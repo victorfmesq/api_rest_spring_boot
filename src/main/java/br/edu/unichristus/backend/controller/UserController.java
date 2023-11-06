@@ -1,6 +1,7 @@
 package br.edu.unichristus.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.unichristus.backend.data.dto.UserDTO;
 import br.edu.unichristus.backend.data.dto.UserLowDTO;
+import br.edu.unichristus.backend.exception.CommonsException;
 import br.edu.unichristus.backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,12 +30,19 @@ public class UserController {
   @Operation(summary = "Cadastra os dados de um usuário | role: [ADMIN]", tags = "User")
   @PostMapping
   public UserDTO create(@RequestBody UserDTO user) {
+    if (user.getId() != null) {
+      throw new CommonsException(HttpStatus.BAD_REQUEST,
+          "unichristus.backend.controller.user.badrequest.exception",
+          "O campo Id não é permitido nesta rota.");
+    }
     return service.save(user);
   }
 
   @Operation(summary = "Altera os dados de um usuário | role: [ADMIN]", tags = "User")
-  @PutMapping
-  public UserDTO update(@RequestBody UserDTO user) {
+  @PutMapping("/{id}")
+  public UserDTO update(@RequestBody UserDTO user, @PathVariable("id") Long id) {
+    user.setId(id);
+
     return service.save(user);
   }
 

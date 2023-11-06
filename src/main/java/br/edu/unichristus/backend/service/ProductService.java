@@ -19,16 +19,24 @@ public class ProductService {
   private ProductRepository repository;
 
   public ProductDTO save(ProductDTO dto) {
+    var prodId = dto.getId();
+
+    if (prodId != null) {
+      this.findById(prodId);
+    }
+
     if (dto.getName().length() > 100) {
       throw new CommonsException(HttpStatus.BAD_REQUEST, // 400
           "unichristus.backend.service.product.badrequest.exception",
           "O nome do produto excede o limite de 100 caracteres.");
     }
 
-    var prodId = dto.getId();
+    var productByName = repository.findByName(dto.getName());
 
-    if (prodId != null) {
-      this.findById(prodId);
+    if (!productByName.isEmpty() && productByName.get().getId() != prodId) { // email
+      throw new CommonsException(HttpStatus.CONFLICT, // 409
+          "unichristus.backend.service.product.conflict.exception",
+          "O Nome do produto informado já foi cadastrado.");
     }
 
     var product = DozerConverter.parseObject(dto, Product.class);

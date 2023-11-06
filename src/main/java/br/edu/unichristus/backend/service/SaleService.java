@@ -25,8 +25,10 @@ public class SaleService {
   private ProductService productService;
 
   public SaleDTO save(SaleDTO dto) {
-    if (dto.getId() != null) {
-      this.findById(dto.getId());
+    var saleId = dto.getId();
+
+    if (saleId != null) {
+      this.findById(saleId);
     }
 
     // validate customer
