@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Minha API", version = "1.0", description = "Descrição da minha API", contact = @Contact(name = "Nome do Contato", email = "contato@exemplo.com", url = "https://www.exemplo.com")))
+@OpenAPIDefinition(info = @Info(title = "NP2 Tópicos Especiais em Programação Web", version = "1.0", description = "API simples para um sistema de vendas de produtos", contact = @Contact(name = "Repositório Github", url = "https://github.com/victorfmesq/api_rest_spring_boot")))
 public class BackendApplication {
 
   public static void main(String[] args) {
